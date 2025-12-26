@@ -37,46 +37,6 @@ const getAllTasks = async (req, res) => {
   }
 };
 
-// const getTaskById = async (req, res) => {
-//   try {
-//     const taskId = parseInt(req.params.id);
-//     const userId = req.user.id;
-
-//     console.log('Task ID:', taskId);
-//     console.log('User ID:', userId);
-
-//     if (isNaN(taskId)) {
-//       return res.status(400).json({
-//         message: 'Invalid task id',
-//       });
-//     }
-
-//     const task = await taskModel.getTaskByIdAndUser(taskId, userId);
-
-//     // 🔒 No task found → do NOT reveal why
-//     if (!task) {
-//       return res.status(404).json({
-//         message: 'Task not found',
-//       });
-//     }
-
-//      // 🔒 Step 2: Check ownership
-//     if (task.user_id !== userId) {
-//       // ❌ Task exists but belongs to another user
-//       return res.status(403).json({
-//         message: 'You are not allowed to access this task',
-//       });
-//     }
-
-//     return res.status(200).json(task);
-
-//   } catch (error) {
-//     console.error(error);
-//     return res.status(500).json({
-//       message: 'Failed to fetch task',
-//     });
-//   }
-// };
 const getTaskById = async (req, res) => {
   try {
     const taskId = parseInt(req.params.id);
