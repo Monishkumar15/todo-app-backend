@@ -23,7 +23,20 @@ const getTasksByUserId = async (userId) => {
   return rows;
 };
 
+// 🔍 Fetch task by ID only
+const getTaskById = async (taskId) => {
+  const query = `
+    SELECT id, title, description, status, user_id, created_at
+    FROM todos
+    WHERE id = $1
+  `;
+
+  const { rows } = await pool.query(query, [taskId]);
+  return rows[0];
+};
+
 module.exports = {
   createTask,
   getTasksByUserId,
+  getTaskById,
 };

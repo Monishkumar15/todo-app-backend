@@ -1,19 +1,22 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.status(401).json({
-      message: 'Access token required',
-    });
+  // if (!authHeader) {
+  //   return res.status(401).json({
+  //     message: "Access token required",
+  //   });
+  // }
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized Access token required" });
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({
-      message: 'Invalid token format',
+      message: "Invalid token format",
     });
   }
 
@@ -25,7 +28,7 @@ const authenticateToken = (req, res, next) => {
     next();
   } catch (error) {
     return res.status(401).json({
-      message: 'Invalid or expired token',
+      message: "Invalid or expired token",
     });
   }
 };

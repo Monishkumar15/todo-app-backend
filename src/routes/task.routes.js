@@ -17,6 +17,6 @@ router.post(
 router.get("/", authenticateToken, taskController.getAllTasks);
 
 // GET /api/tasks/:id
-router.get('/:id', authMiddleware, taskController.getTaskById);
+router.get('/:id', authenticateToken, taskController.getTaskById);
 
 module.exports = router;
