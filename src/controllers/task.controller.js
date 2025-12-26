@@ -128,9 +128,57 @@ const updateTask = async (req, res) => {
   }
 };
 
+const deleteTask = async (req, res) => {
+  try {
+    const taskId = parseInt(req.params.id, 10);
+    const userId = req.user.id;
+
+    // 1 Invalid task ID
+    if (isNaN(taskId)) {
+      return res.status(400).json({
+        message: 'Invalid task id',
+      });
+    }
+
+    // 2 Fetch task
+    const task = await taskModel.getTaskById(taskId);
+
+    // 3 Task not found
+    if (!task) {
+      return res.status(404).json({
+        message: 'Task not found',
+      });
+    }
+
+    // 4 Forbidden (another user’s task)
+    if (task.user_id !== userId) {
+      return res.status(403).json({
+        message: 'You are not allowed to delete this task',
+      });
+    }
+
+    // 5 Delete task permanently
+    await taskModel.deleteTask(taskId);
+
+    // 6 Success
+    // return res.status(204).send(`your task id `);
+    // ? Return JSON response
+    return res.status(200).json({
+      message: `Task id ${taskId} is deleted`
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: 'Failed to delete task',
+    });
+  }
+};
+
 module.exports = {
   createTask,
   getAllTasks,
   getTaskById,
   updateTask,
+  deleteTask,
 };

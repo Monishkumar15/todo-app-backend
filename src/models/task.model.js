@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const db = require('../config/db');
 
 const createTask = async ({ title, description, status, userId }) => {
   const result = await pool.query(
@@ -48,9 +49,17 @@ const updateTask = async (taskId, title, description, status) => {
   return result.rows[0];
 };
 
+const deleteTask = async (taskId) => {
+  await db.query(
+    'DELETE FROM todos WHERE id = $1',
+    [taskId]
+  );
+}
+
 module.exports = {
   createTask,
   getTasksByUserId,
   getTaskById,
   updateTask,
+  deleteTask,
 };
