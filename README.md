@@ -54,7 +54,7 @@ DB_NAME=project_abc
 JWT_SECRET=your_secret
 ```
 ---
-### *Database Setup*
+### Database Setup
 
 ```sql
 CREATE DATABASE project_abc;
