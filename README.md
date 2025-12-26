@@ -115,6 +115,52 @@ DELETE /api/tasks/:id
 Authorization: Bearer <your_token>
 ```
 ---
+## 🔄 How Routes Work (Request Flow)
+request → middleware → controller → model → database → response
+
+---
+
+## 🔄 How Routes Work (Request Flow)
+
+This project follows a clean layered architecture to handle API requests.
+
+### Example: Create Task (`POST /api/tasks`)
+
+1. **Client Request**
+   - The client sends a request with task data and a JWT token in headers.
+
+2. **Route Layer**
+   - The request hits the route defined in `task.routes.js`.
+
+3. **Authentication Middleware**
+   - `auth.middleware.js` verifies the JWT.
+   - Extracts the user ID and attaches it to `req.user`.
+   - Rejects the request with `401 Unauthorized` if the token is invalid or missing.
+
+4. **Controller Layer**
+   - `task.controller.js` validates request body (title, status).
+   - Ensures task belongs to the authenticated user.
+   - Calls the model layer to perform database operations.
+
+5. **Model Layer**
+   - `task.model.js` executes SQL queries using PostgreSQL.
+   - Handles data persistence and retrieval.
+
+6. **Database**
+   - Data is stored or retrieved from the `todos` table.
+
+7. **Response**
+   - A proper HTTP response is sent back (201 Created / 400 / 401 / 403 / 404).
+
+---
+
+### 🔐 Protected Route Flow
+
+All task-related routes are protected using JWT authentication:
+
+
+
+---
 ### 🧪 API Testing
 API can be tested using:
 - Postman
