@@ -35,8 +35,22 @@ const getTaskById = async (taskId) => {
   return rows[0];
 };
 
+// Update task
+const updateTask = async (taskId, title, description, status) => {
+  const result = await pool.query(
+    `UPDATE todos
+     SET title = $1, description = $2, status = $3
+     WHERE id = $4
+     RETURNING *`,
+    [title, description, status, taskId]
+  );
+
+  return result.rows[0];
+};
+
 module.exports = {
   createTask,
   getTasksByUserId,
   getTaskById,
+  updateTask,
 };

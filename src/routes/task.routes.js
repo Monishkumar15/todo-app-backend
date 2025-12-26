@@ -19,4 +19,7 @@ router.get("/", authenticateToken, taskController.getAllTasks);
 // GET /api/tasks/:id
 router.get('/:id', authenticateToken, taskController.getTaskById);
 
+
+router.put('/:id', authenticateToken, taskController.updateTask);
+
 module.exports = router;
